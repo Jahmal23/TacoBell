@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html ng-app="app">
 <head>
-  <title>LD Studios Rails Interview</title>
+  <title>Rails</title>
   <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/css/bootstrap.css" media="screen" rel="stylesheet" type="text/css" />
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css" media="screen" rel="stylesheet" type="text/css" />
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.1/jquery.min.js" type="text/javascript"></script>
@@ -12,12 +12,12 @@
 <body ng-cloak>
 
 <article class="container tacos" ng-controller="TacosCtrl as tc">
-  <h1>LD Taco Shop</h1>
+  <h1>Classy Taco</h1>
   <div class="alert alert-danger" ng-if="tc.listError"><strong>Error getting tacos:</strong> {{tc.listError}}</div>
   <div class="alert alert-danger" ng-if="tc.createError"><strong>Error ordering taco:</strong> {{tc.createError}}</div>
   <div class="alert alert-danger" ng-if="tc.deleteError"><strong>Error deleting taco:</strong> {{tc.deleteError}}</div>
 
-  <h3>Order a new Taco</h3>
+  <h3>Order a new classy taco</h3>
 
   <form name="form" novalidate role="form" ng-submit="form.$valid && tc.createTaco()">
     <fieldset ng-disabled="tc.creatingTaco">
