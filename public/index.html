@@ -34,10 +34,10 @@
       <label>Sides</label>
       <div class="form-group">
         <label class="checkbox-inline">
-          <input type="checkbox" ng-model="tc.newTaco.rice"> Rice
+          <input type="checkbox" ng-model="tc.newTaco.has_rice"> Rice
         </label>
         <label class="checkbox-inline">
-          <input type="checkbox" ng-model="tc.newTaco.salsa"> Salsa
+          <input type="checkbox" ng-model="tc.newTaco.has_salsa"> Salsa
         </label>
       </div>
 
@@ -112,6 +112,9 @@
     };
 
     this.createTaco = function(json) {
+
+      console.log(json);
+
       return $http({
         method: 'POST',
         url: '/tacos',

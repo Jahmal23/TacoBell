@@ -4,11 +4,8 @@ class TacosController < ApplicationController
   # GET /tacos
   # GET /tacos.json
   def index
-
     @tacos = Taco.all
-
     render json: @tacos.to_json(:methods => [:taco_meat, :has_salsa, :has_rice])
-
   end
 
   # GET /tacos/1
@@ -28,25 +25,26 @@ class TacosController < ApplicationController
   # POST /tacos
   # POST /tacos.json
   def create
+    @taco = Taco.new
 
-    @taco = Taco.new(taco_params)
-    @taco.meat_id = Meat.find_by(name: params[:meat]).id
+    @taco.meat = Meat.find_by(name: taco_params[:meat])
 
-    if (params[:salsa])
-      @taco.taco_to_sides << TacoToSide.new(taco: @taco, side: Side.find_by(name: "Salsa"))
+    if taco_params[:has_salsa]
+      @taco.taco_to_sides << TacoToSide.new(taco: @taco, side: Side.find_by(name: Side::SALSA_SIDE_NAME))
     end
 
-    if (params[:rice])
-      @taco.taco_to_sides << TacoToSide.new(taco: @taco, side: Side.find_by(name: "Rice"))
+    if taco_params[:has_rice]
+      @taco.taco_to_sides << TacoToSide.new(taco: @taco, side: Side.find_by(name: Side::RICE_SIDE_NAME))
     end
+
+    @taco.notes = taco_params[:notes]
 
     if @taco.save
       render json: @taco.to_json(:methods => [:taco_meat, :has_salsa, :has_rice])
     else
       format.json { render json: @taco.errors, status: :unprocessable_entity }
     end
-
-  end
+ end
 
   # PATCH/PUT /tacos/1
   # PATCH/PUT /tacos/1.json
@@ -65,11 +63,9 @@ class TacosController < ApplicationController
   # DELETE /tacos/1
   # DELETE /tacos/1.json
   def destroy
-
     @taco.destroy
 
-    render json: @taco
-
+    render json: @taco,  status: :ok
   end
 
   private
@@ -80,6 +76,6 @@ class TacosController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def taco_params
-      params.require(:taco).permit(:notes, :meat_id, :meat, :has_rice, :has_salsa)
+      params.permit(:notes, :meat, :has_rice, :has_salsa)
     end
 end
