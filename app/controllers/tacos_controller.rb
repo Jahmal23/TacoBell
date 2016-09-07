@@ -64,7 +64,6 @@ class TacosController < ApplicationController
   # DELETE /tacos/1.json
   def destroy
     @taco.destroy
-
     render json: @taco,  status: :ok
   end
 
