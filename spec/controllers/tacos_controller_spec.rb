@@ -3,6 +3,7 @@ require 'spec_helper'
 
 RSpec.describe TacosController, :type => :controller do
   let!(:tacos) { FactoryGirl.create_list(:taco, 4) }
+  let!(:taco_attrs) { FactoryGirl.attributes_for(:taco) }
 
   describe '#index' do
     before(:each) { get :index }
@@ -28,6 +29,18 @@ RSpec.describe TacosController, :type => :controller do
         expect(Taco.all).not_to include tacos[0]
         expect { tacos[0].reload }.to raise_exception ActiveRecord::RecordNotFound
       end
+    end
+  end
+
+  describe '#create' do
+    context 'has valid attributes' do
+
+      it 'creates a new taco' do
+        expect{
+          post :create, taco: taco_attrs
+        }.to change(Taco,:count).by(1)
+      end
+
     end
   end
 
