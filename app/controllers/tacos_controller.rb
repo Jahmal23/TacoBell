@@ -25,10 +25,7 @@ class TacosController < ApplicationController
   # POST /tacos
   # POST /tacos.json
   def create
-
     @taco = Taco.new
-
-    byebug
 
     @taco.meat = Meat.find_by(name: taco_params[:meat])
 
