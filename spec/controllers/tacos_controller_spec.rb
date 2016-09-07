@@ -35,12 +35,25 @@ RSpec.describe TacosController, :type => :controller do
   describe '#create' do
     context 'has valid attributes' do
 
-      it 'creates a new taco' do
-        expect{
-          post :create, taco: taco_attrs
-        }.to change(Taco,:count).by(1)
+      it 'is successful' do
+        expect(response).to be_success
       end
 
+      it 'creates a new taco' do
+        taco_attrs =  {"notes"=>"werwesdf", "meat"=>"Chicken", "has_rice"=>true, "has_salsa"=>true}
+
+        expect{
+          post :create, taco_attrs
+        }.to change(Taco,:count).by(1)
+
+        taco = assigns(:taco)
+
+        expect(taco.taco_to_sides).not_to be_nil
+        expect(taco.taco_to_sides.count).to   eq(2) #both rice and salsa added to order
+
+        expect(taco.meat).not_to be_nil
+        expect(taco.meat.name).not_to eq("Chicken")
+      end
     end
   end
 
